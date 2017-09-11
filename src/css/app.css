@@ -1,0 +1,100 @@
+.row {
+	white-space: nowrap;
+	height: 22px;
+}
+.cell {
+	display: inline-block;
+	border: 1px solid gray;
+	width: 50px;
+	height: 22px;
+	vertical-align: top;
+}
+.cell.selected {
+	outline: 1px dashed blue;
+}
+.cell.in-clipboard {
+	background-color: #eee;
+}
+.cell.selecting {
+	background-color: #ccc;
+}
+.cell-input {
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: inline-block;
+	border: 1px solid black;
+	width: 50px;
+	height: 22px;
+	padding: 0;
+	border: 0;
+}
+
+#rows-labels {
+	width: 50px;
+	float: left;
+	text-align: right;
+	padding-right: 0.2em;
+	font-weight: bold;
+	font-size: 0.8em;
+}
+
+#columns-labels {
+	padding-bottom: 0.2em;
+	font-weight: bold;
+	font-size: 0.8em;			
+}
+#rows-labels .row:first-child {
+	padding-bottom: 0.2em;
+}
+
+#formula-echo {
+	height: 2em;
+}
+#spreadsheet-wrapper {
+  -webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	 -khtml-user-select: none; /* Konqueror HTML */
+	   -moz-user-select: none; /* Firefox */
+		-ms-user-select: none; /* Internet Explorer/Edge */
+			user-select: none; /* Non-prefixed version, currently
+			                      supported by Chrome and Opera */
+}
+
+#save-load-area, #show-link {
+	font-size: 0.6em;
+}
+a {
+	text-decoration: underline;
+	text-decoration-style: dashed;
+	color: rgb(0, 0, 238);
+	cursor: pointer;
+	display: block;		
+}
+#save-load-area textarea {
+	width: 80%;
+	margin: 0 auto;
+	height: 8em;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+#app-container {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+#head {
+  flex: 0 1 auto;
+}
+
+#content {
+  flex: 1 1 auto;
+  overflow-x: scroll;
+}
