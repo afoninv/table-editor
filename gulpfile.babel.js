@@ -20,6 +20,10 @@ import modernizr from 'modernizr';
 import pkg from './package.json';
 import modernizrConfig from './modernizr-config.json';
 
+import babel from 'babelify';
+import source from 'vinyl-source-stream';
+import buffer from 'vinyl-buffer';
+import browserify from 'browserify';
 
 const dirs = pkg['h5bp-configs'].directories;
 
@@ -78,6 +82,7 @@ gulp.task('clean', (done) => {
 gulp.task('copy', [
     'copy:.htaccess',
     'copy:index.html',
+    'copy:js',
     'copy:jquery',
     'copy:license',
     'copy:main.css',
@@ -104,6 +109,17 @@ gulp.task('copy:index.html', (done) =>
             .pipe(gulp.dest(dirs.dist));
         done();
     })
+);
+
+gulp.task('copy:js', () => {
+  var bundler = browserify(`${dirs.src}/js/main.js`, { debug: true }).transform(babel);
+
+  return bundler.bundle()
+      .on('error', function(err) { console.error(err); this.emit('end'); })
+      .pipe(source('build.js'))
+      .pipe(buffer())
+      .pipe(gulp.dest(`${dirs.dist}/js/build`));
+}
 );
 
 gulp.task('copy:jquery', () =>
@@ -139,6 +155,7 @@ gulp.task('copy:misc', () =>
         // Exclude the following files
         // (other tasks will handle the copying of these files)
         `!${dirs.src}/css/main.css`,
+        `!${dirs.src}/js/*.js`,
         `!${dirs.src}/index.html`
 
     ], {
@@ -165,12 +182,13 @@ gulp.task( 'modernizr', (done) =>{
 gulp.task('lint:js', () =>
     gulp.src([
         'gulpfile.js',
-        `${dirs.src}/js/*.js`,
+//        `${dirs.src}/js/*.js`,
+        `${dirs.src}/js/main.js`,
         `${dirs.test}/*.js`
     ]).pipe(plugins().jscs())
       .pipe(plugins().jshint())
       .pipe(plugins().jshint.reporter('jshint-stylish'))
-      .pipe(plugins().jshint.reporter('fail'))
+//      .pipe(plugins().jshint.reporter('fail'))
 );
 
 
@@ -188,7 +206,7 @@ gulp.task('archive', (done) => {
 
 gulp.task('build', (done) => {
     runSequence(
-        ['clean', /*'lint:js'*/],
+        ['clean', 'lint:js'],
         'copy', 'modernizr',
     done)
 });
