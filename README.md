@@ -5,6 +5,8 @@
 * JSON import/export
 * No class constructors defined (as weird as it seems, this was the requirement)
 
+Serve dist/index.html to browser
+
 ## Made with [HTML5 Boilerplate](https://html5boilerplate.com/)
 
 * Homepage: [https://html5boilerplate.com/](https://html5boilerplate.com/)
